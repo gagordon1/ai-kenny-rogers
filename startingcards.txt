@@ -1,0 +1,872 @@
+ <table width="482" height="935" border="0" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td valign="top"><table cellpadding="0" cellspacing="0" border="1">
+                          <tr class="blue-writing">
+                            <td width="47">Cards</td>
+                            <td width="36" align="right"><div align="center">EV</div></td>
+                            <td width="69" align="right"><div align="center">Count</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AA</td>
+                            <td align="right" class="green"><div align="center">2.32</div></td>
+                            <td align="right" class="copyGrey"><div align="center">521,324</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">KK</td>
+                            <td align="right" class="green"><div align="center">1.67</div></td>
+                            <td align="right" class="copyGrey"><div align="center">522,652</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">QQ</td>
+                            <td align="right" class="green"><div align="center">1.22</div></td>
+                            <td align="right" class="copyGrey"><div align="center">520,663</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">JJ</td>
+                            <td align="right" class="green"><div align="center">0.86</div></td>
+                            <td align="right" class="copyGrey"><div align="center">521,866</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AK s</td>
+                            <td align="right" class="green"><div align="center">0.78</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,364</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AQ s</td>
+                            <td align="right" class="green"><div align="center">0.59</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,759</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">TT</td>
+                            <td align="right" class="green"><div align="center">0.58</div></td>
+                            <td align="right" class="copyGrey"><div align="center">520,705</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AK</td>
+                            <td align="right" class="green"><div align="center">0.51</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,008</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AJ s</td>
+                            <td align="right" class="green"><div align="center">0.44</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,126</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">KQ s</td>
+                            <td align="right" class="green"><div align="center">0.39</div></td>
+                            <td align="right" class="copyGrey"><div align="center">346,772</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">99</td>
+                            <td align="right" class="green"><div align="center">0.38</div></td>
+                            <td align="right" class="copyGrey"><div align="center">522,454</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AT s</td>
+                            <td align="right" class="green"><div align="center">0.32</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,013</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AQ</td>
+                            <td align="right" class="green"><div align="center">0.31</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,042,962</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">KJ s</td>
+                            <td align="right" class="green"><div align="center">0.29</div></td>
+                            <td align="right" class="copyGrey"><div align="center">346,582</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">88</td>
+                            <td align="right" class="green"><div align="center">0.25</div></td>
+                            <td align="right" class="copyGrey"><div align="center">521,972</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">QJ s</td>
+                            <td align="right" class="green"><div align="center">0.23</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,870</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">KT s</td>
+                            <td align="right" class="green"><div align="center">0.20</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,774</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A9 s</td>
+                            <td align="right" class="green"><div align="center">0.19</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,992</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AJ</td>
+                            <td align="right" class="green"><div align="center">0.19</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,857</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">QT s</td>
+                            <td align="right" class="green"><div align="center">0.17</div></td>
+                            <td align="right" class="copyGrey"><div align="center">346,115</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">KQ</td>
+                            <td align="right" class="green"><div align="center">0.16</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,069</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">77</td>
+                            <td align="right" class="green"><div align="center">0.16</div></td>
+                            <td align="right" class="copyGrey"><div align="center">524,345</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">JT s</td>
+                            <td align="right" class="green"><div align="center">0.15</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,235</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A8 s</td>
+                            <td align="right" class="green"><div align="center">0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,431</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K9 s</td>
+                            <td align="right" class="green"><div align="center">0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,286</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">AT</td>
+                            <td align="right" class="green"><div align="center">0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,289</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A5 s</td>
+                            <td align="right" class="green"><div align="center">0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,544</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A7s</td>
+                            <td align="right" class="green"><div align="center">0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,949</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">KJ</td>
+                            <td align="right" class="green"><div align="center">0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,098</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">66</td>
+                            <td align="right" class="green"><div align="center">0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">520,946</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T9 s</td>
+                            <td align="right" class="green"><div align="center">0.05</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,264</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A4 s</td>
+                            <td align="right" class="green"><div align="center">0.05</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,862</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q9 s</td>
+                            <td align="right" class="green"><div align="center">0.05</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,760</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J9 s</td>
+                            <td align="right" class="green"><div align="center">0.04</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,965</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">QJ</td>
+                            <td align="right" class="green"><div align="center">0.03</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,338</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A6 s</td>
+                            <td align="right" class="green"><div align="center">0.03</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,677</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">55</td>
+                            <td align="right" class="green"><div align="center">0.02</div></td>
+                            <td align="right" class="copyGrey"><div align="center">521,945</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A3 s</td>
+                            <td align="right" class="green"><div align="center">0.02</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,895</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K8 s</td>
+                            <td align="right" class="green"><div align="center">0.01</div></td>
+                            <td align="right" class="copyGrey"><div align="center">350,401</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">KT</td>
+                            <td align="right" class="green"><div align="center">0.01</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,392</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">98 s</td>
+                            <td align="right" class="green"><div align="center">0.00</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,759</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T8 s</td>
+                            <td align="right" class="green"><div align="center">-0.00</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,443</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K7 s</td>
+                            <td align="right" class="green"><div align="center">-0.00</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,341</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A2 s</td>
+                            <td align="right" class="green"><div align="center">0.00</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,318</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">87 s</td>
+                            <td align="right" class="green"><div align="center">-0.02</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,348</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">QT</td>
+                            <td align="right" class="green"><div align="center">-0.02</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,827</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q8 s</td>
+                            <td align="right" class="green"><div align="center">-0.02</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,381</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">44</td>
+                            <td align="right" class="green"><div align="center">-0.03</div></td>
+                            <td align="right" class="copyGrey"><div align="center">523,398</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A9</td>
+                            <td align="right" class="green"><div align="center">-0.03</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,672</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J8 s</td>
+                            <td align="right" class="green"><div align="center">-0.03</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,046</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">76 s</td>
+                            <td align="right" class="green"><div align="center">-0.03</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,540</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">JT</td>
+                            <td align="right" class="green"><div align="center">-0.03</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,812</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">97 s</td>
+                            <td align="right" class="green"><div align="center">-0.04</div></td>
+                            <td align="right" class="copyGrey"><div align="center">350,158</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K6 s</td>
+                            <td align="right" class="green"><div align="center">-0.04</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,029</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K5 s</td>
+                            <td align="right" class="green"><div align="center">-0.05</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,320</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K4 s</td>
+                            <td align="right" class="green"><div align="center">-0.05</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,681</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T7 s</td>
+                            <td align="right" class="green"><div align="center">-0.05</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,638</div></td>
+                          </tr>
+                        </table></td>
+                        <td valign="top" bgcolor="white">&nbsp; &nbsp;</td>
+                        <td valign="top"><table cellpadding="0" cellspacing="0" border="1">
+                          <tr class="blue-writing">
+                            <td width="46">Cards</td>
+                            <td width="32" align="right"><div align="center">EV</div></td>
+                            <td width="73" align="right"><div align="center">Count</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q7 s</td>
+                            <td align="right" class="green"><div align="center">-0.06</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,073</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K9</td>
+                            <td align="right" class="green"><div align="center">-0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,630</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">65 s</td>
+                            <td align="right" class="green"><div align="center">-0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,590</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T9</td>
+                            <td align="right" class="green"><div align="center">-0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,306</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">86 s</td>
+                            <td align="right" class="green"><div align="center">-0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,374</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A8</td>
+                            <td align="right" class="green"><div align="center">-0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,042,209</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J7 s</td>
+                            <td align="right" class="green"><div align="center">-0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">345,009</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">33</td>
+                            <td align="right" class="green"><div align="center">-0.07</div></td>
+                            <td align="right" class="copyGrey"><div align="center">522,632</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">54 s</td>
+                            <td align="right" class="green"><div align="center">-0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,260</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q6 s</td>
+                            <td align="right" class="green"><div align="center">-0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,068</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K3 s</td>
+                            <td align="right" class="green"><div align="center">-0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,865</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q9</td>
+                            <td align="right" class="green"><div align="center">-0.08</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,049,468</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">75 s</td>
+                            <td align="right" class="green"><div align="center">-0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,781</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">22</td>
+                            <td align="right" class="green"><div align="center">-0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">524,131</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J9</td>
+                            <td align="right" class="green"><div align="center">-0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,150</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">64 s</td>
+                            <td align="right" class="green"><div align="center">-0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,689</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q5 s</td>
+                            <td align="right" class="green"><div align="center">-0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">350,110</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K2 s</td>
+                            <td align="right" class="green"><div align="center">-0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,276</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">96 s</td>
+                            <td align="right" class="green"><div align="center">-0.09</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,514</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q3 s</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,009</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J8</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,506</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">98</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,759</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T8</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,779</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">97</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,152</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A7</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,587</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T7</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,950</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q4 s</td>
+                            <td align="right" class="green"><div align="center">-0.10</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,979</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q8</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,251</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J5 s</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,923</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T6</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,014</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">75</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,447</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J4 s</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,508</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">74 s</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">350,325</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K8</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,167</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">86</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,524</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">53 s</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">346,930</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K7</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,698</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">63 s</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">346,449</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J6 s</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,570</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">85</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,159</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T6 s</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,875</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">76</td>
+                            <td align="right" class="green"><div align="center">-0.11</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,722</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A6</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,762</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T2</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,032</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">95 s</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,477</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">84</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,266</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">62</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,049,495</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T5 s</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,928</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">95</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,601</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A5</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,285</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q7</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,099</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T5</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,428</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">87</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,635</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">83</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,550</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">65</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,971</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q2 s</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,912</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">94</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,422</div></td>
+                          </tr>
+                        </table></td>
+                        <td valign="top" bgcolor="white">&nbsp; &nbsp;</td>
+                        <td valign="top"><table cellpadding="0" cellspacing="0" border="1">
+                          <tr class="blue-writing">
+                            <td width="46">Cards</td>
+                            <td width="34" align="right"><div align="center">EV</div></td>
+                            <td width="73" align="right"><div align="center">Count</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">74</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,278</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">54</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,435</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A4</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,931</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T4</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,976</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">82</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,638</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">64</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,079</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">42</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,357</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J7</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,565</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">93</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,989</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">85 s</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,928</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">73</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,020</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">53</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,022</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T3</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,043,908</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">63</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,818</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K6</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,039</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J6</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,991</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">96</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,156</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">92</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,049,342</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">72</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,167</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">52</td>
+                            <td align="right" class="green"><div align="center">-0.12</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,049,213</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q4</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,087</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K5</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,359</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J5</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,697</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">43 s</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,802</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q3</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,649</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">43</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,900</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K4</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,562</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J4</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,129</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T4 s</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">350,639</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q6</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,958</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q2</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,353</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J3 s</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,254</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J3</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,204</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T3 s</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,673</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A3</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,046,970</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">Q5</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,946</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J2</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,715</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">84 s</td>
+                            <td align="right" class="green"><div align="center">-0.13</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,390</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">82 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,622</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">42 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">350,591</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">93 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,835</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">73 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,007</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K3</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,045,968</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">J2 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,259</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">92 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">347,868</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">52 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,401</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">K2</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,048,521</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">T2 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,612</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">62 s</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,033</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">32</td>
+                            <td align="right" class="green"><div align="center">-0.14</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,044,956</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">A2</td>
+                            <td align="right" class="green"><div align="center">-0.15</div></td>
+                            <td align="right" class="copyGrey"><div align="center">1,047,979</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">83 s</td>
+                            <td align="right" class="green"><div align="center">-0.15</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,355</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">94 s</td>
+                            <td align="right" class="green"><div align="center">-0.15</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,259</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">72 s</td>
+                            <td align="right" class="green"><div align="center">-0.15</div></td>
+                            <td align="right" class="copyGrey"><div align="center">348,368</div></td>
+                          </tr>
+                          <tr class="copyBold">
+                            <td class="boldgreen">32 s</td>
+                            <td align="right" class="green"><div align="center">-0.15</div></td>
+                            <td align="right" class="copyGrey"><div align="center">349,794</div></td>
+                          </tr>
+                        </table></td>
+                      </tr>
+                    </table>
