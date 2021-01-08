@@ -71,6 +71,7 @@ class BoardState(namedtuple('_BoardState', ['pot', 'pips', 'hands', 'deck', 'pre
         '''
         Compares the players' hands and computes payoffs.
         '''
+        
         score0 = eval7.evaluate(self.deck.peek(5) + self.hands[0])
         score1 = eval7.evaluate(self.deck.peek(5) + self.hands[1])
         if score0 > score1:
@@ -404,7 +405,11 @@ class Player():
         if action in legal_actions:
             if clause[1] == 'R':
                 amount = int(clause[2:])
+                
                 min_raise, max_raise = board_state.raise_bounds(button, stacks)
+                # print(amount)
+                # print(min_raise <= amount <= max_raise)
+                # print("MIN RAISE:", min_raise, "MAX RAISE:", max_raise)
                 if min_raise <= amount <= max_raise:
                     return action(amount)
             elif clause[1] == 'A':
