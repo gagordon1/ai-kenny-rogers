@@ -410,6 +410,7 @@ class Player():
                 # print(amount)
                 # print(min_raise <= amount <= max_raise)
                 # print("MIN RAISE:", min_raise, "MAX RAISE:", max_raise)
+                
                 if min_raise <= amount <= max_raise:
                     return action(amount)
             elif clause[1] == 'A':

@@ -39,6 +39,20 @@ public class Player implements Bot {
     private static double TURN_ALMOST_FLUSH_WIN_PROBABILITY = .55;
     
     
+    private static double CONFIDENT_WIN_THRESHOLD = .9;
+    private static double CONFIDENT_WIN_BET_SIZE = .75;
+    
+    private static double THRESHOLD_2 = .75;
+    private static double THRESHOLD_2_BET_SIZE = .5;
+    
+    private static double THRESHOLD_3 = .6;
+    private static double THRESHOLD_3_BET_SIZE = .25;
+    
+    private static int BIG_BLIND = 2;
+    private static int SMALL_BLIND = 1;
+    
+    
+    
     private List<String> suitedPairs = List.of(
             "AK",
             "AQ",
@@ -465,16 +479,13 @@ public class Player implements Bot {
     private double getFlushWinProb(List<String> cards) {
         if (maxSameSuit(cards) >= 5) {
             //WE HAVE A FLUSH
-            System.out.println("FLUSH! " + MADE_FLUSH_WIN_PROBABILITY + " WIN PROBABILITY");
             return MADE_FLUSH_WIN_PROBABILITY; 
         }
         else if (maxSameSuit(cards) == 4) {
             if (cards.size() == 5) {
-                System.out.println("ALMOST FLUSH! " + FLOP_ALMOST_FLUSH_WIN_PROBABILITY + " WIN PROBABILITY");
                 return FLOP_ALMOST_FLUSH_WIN_PROBABILITY;
             }
             else if (cards.size() == 6) {
-                System.out.println("ALMOST FLUSH! " + TURN_ALMOST_FLUSH_WIN_PROBABILITY + " WIN PROBABILITY");
                 return TURN_ALMOST_FLUSH_WIN_PROBABILITY;
             }
             else {
@@ -551,7 +562,6 @@ public class Player implements Bot {
             double fourOfAKindWinProb;
             double flushWinProb;
             
-            System.out.println("FLUSH CHECK FOR BOARD: " + (i+1));
             flushWinProb = this.getFlushWinProb(commCards);
             winProb[i] = Collections.max(List.of(winProbability, flushWinProb));
 //            winProb[i] = Math.max(nonFlushWinProb, flushWinProb);//maximum of chance of winning with a flush and chance of winning
@@ -608,6 +618,7 @@ public class Player implements Bot {
          
         
         int myStack = roundState.stacks.get(active);  // the number of chips you have remaining
+        int oppStack = roundState.stacks.get(1-active);
         // int oppStack = roundState.stacks.get(1-active);  // the number of chips your opponent has remaining
         int netLowerRaiseBound = roundState.raiseBounds().get(0);
         int netUpperRaiseBound = roundState.raiseBounds().get(1);  // the maximum value you can raise across all 3 boards
@@ -663,8 +674,64 @@ public class Player implements Bot {
                 final int pipsAvailable = myStack - netCost;
                 final double winProbability = winProb[i];
                 double potOdds = ((double) continueCost)/(continueCost + pot);
+                final int maxContribution = myPips + Collections.min(List.of(pipsAvailable, oppStack + continueCost));
+                final int minContribution = myPips + Collections.min(List.of(maxContribution, continueCost + 
+                        Collections.max(List.of(continueCost, BIG_BLIND))));
                 
-            }  
+                
+                System.out.println("\n");
+                System.out.println("CHIPS IN POT: " + pot);
+                //ONLY RAISE WHEN no continue cost (able to check)
+                
+                if(winProbability > CONFIDENT_WIN_THRESHOLD && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE) 
+                        && legalBoardActions.contains(ActionType.CHECK_ACTION_TYPE)) {
+                    
+                    final int desiredRaise =  (int) (CONFIDENT_WIN_BET_SIZE*pot);
+                    final int raiseAmount = Collections.min(
+                            List.of(maxContribution, Collections.max(List.of(minContribution, desiredRaise))));
+                    
+                    myActions.add(new Action(ActionType.RAISE_ACTION_TYPE, raiseAmount));
+                    netCost += raiseAmount;
+                }
+                else if (winProbability > THRESHOLD_2 && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE) 
+                        && legalBoardActions.contains(ActionType.CHECK_ACTION_TYPE)){
+                    
+                    final int desiredRaise = (int) (THRESHOLD_2_BET_SIZE*pot);
+                    final int raiseAmount = Collections.min(
+                            List.of(maxContribution, Collections.max(List.of(minContribution, desiredRaise))));
+                    
+                    myActions.add(new Action(ActionType.RAISE_ACTION_TYPE, raiseAmount));
+                    netCost += raiseAmount;
+                    
+                }
+                else if (winProbability > THRESHOLD_3 && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE) 
+                        && legalBoardActions.contains(ActionType.CHECK_ACTION_TYPE)) {
+                    
+                    final int desiredRaise = (int) (THRESHOLD_3_BET_SIZE*pot);
+                    final int raiseAmount = Collections.min(
+                            List.of(maxContribution, Collections.max(List.of(minContribution, desiredRaise))));
+                    
+                    myActions.add(new Action(ActionType.RAISE_ACTION_TYPE, raiseAmount));
+                    netCost += raiseAmount;
+                }
+                //odds are at least greater than the pot odds, check or call if available.
+                else if (winProbability > potOdds) {
+                    if (legalBoardActions.contains(ActionType.CHECK_ACTION_TYPE)) {
+                        myActions.add(new Action(ActionType.CHECK_ACTION_TYPE));
+                    }
+                    else {
+                        myActions.add(new Action(ActionType.CALL_ACTION_TYPE));
+                        netCost += continueCost;
+                    }
+                        
+                }
+                //Odds are worse than what it takes to stay in
+                else {
+                    myActions.add(new Action(ActionType.FOLD_ACTION_TYPE));
+                }
+                
+            } 
+        }
         return myActions;
     }
     

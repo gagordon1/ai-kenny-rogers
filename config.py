@@ -1,7 +1,7 @@
 # PARAMETERS TO CONTROL THE BEHAVIOR OF THE GAME ENGINE
 # DO NOT REMOVE OR RENAME THIS FILE
-PLAYER_1_NAME = 'optimal hand classifier'
-PLAYER_1_PATH = './optimal_allocation+hand_classifier'
+PLAYER_1_NAME = 'hero'
+PLAYER_1_PATH = './better_classifier_bot'
 # NO TRAILING SLASHES ARE ALLOWED IN PATHS
 PLAYER_2_NAME = 'VILLAIN'
 PLAYER_2_PATH = './optimal_allocation_bot'
