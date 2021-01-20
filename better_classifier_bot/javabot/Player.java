@@ -29,30 +29,28 @@ public class Player implements Bot {
     // Your instance variables go here.
     String[][] allocation;
     double[] winProb;
-    
+
     private static double PREFLOP_BET_THRESHOLD1 = .57;
     private static double PREFLOP_BET_THRESHOLD2 = .65;
     private static double POSTFLOP_BET_THRESHOLD = .7;
-    
+
     private static double MADE_FLUSH_WIN_PROBABILITY = .96; //calculated in google colab
     private static double FLOP_ALMOST_FLUSH_WIN_PROBABILITY = .62;
     private static double TURN_ALMOST_FLUSH_WIN_PROBABILITY = .55;
-    
-    
+
+
     private static double CONFIDENT_WIN_THRESHOLD = .9;
     private static double CONFIDENT_WIN_BET_SIZE = .75;
-    
+
     private static double THRESHOLD_2 = .75;
     private static double THRESHOLD_2_BET_SIZE = .5;
-    
+
     private static double THRESHOLD_3 = .6;
     private static double THRESHOLD_3_BET_SIZE = .25;
-    
+
     private static int BIG_BLIND = 2;
     private static int SMALL_BLIND = 1;
-    
-    
-    
+
     private List<String> suitedPairs = List.of(
             "AK",
             "AQ",
@@ -399,15 +397,90 @@ public class Player implements Bot {
             0.2908,
             0.5315
             );
+
+    private List<String> allCards = List.of(
+      "As",
+      "Ks",
+      "Qs",
+      "Js",
+      "Ts",
+      "9s",
+      "8s",
+      "7s",
+      "6s",
+      "5s",
+      "4s",
+      "3s",
+      "2s",
+      "Ac",
+      "Kc",
+      "Qc",
+      "Jc",
+      "Tc",
+      "9c",
+      "8c",
+      "7c",
+      "6c",
+      "5c",
+      "4c",
+      "3c",
+      "2c",
+      "Ah",
+      "Kh",
+      "Qh",
+      "Jh",
+      "Th",
+      "9h",
+      "8h",
+      "7h",
+      "6h",
+      "5h",
+      "4h",
+      "3h",
+      "2h",
+      "Ad",
+      "Kd",
+      "Qd",
+      "Jd",
+      "Td",
+      "9d",
+      "8d",
+      "7d",
+      "6d",
+      "5d",
+      "4d",
+      "3d",
+      "2d",
+    );
+
+    private Map<Character, Integer> rankToValueConversion = new HashMap<>();
+    rankToValueConversion.put('2', 1);
+    rankToValueConversion.put('3', 2);
+    rankToValueConversion.put('4', 3);
+    rankToValueConversion.put('5', 4);
+    rankToValueConversion.put('6', 5);
+    rankToValueConversion.put('7', 6);
+    rankToValueConversion.put('8', 7);
+    rankToValueConversion.put('9', 8);
+    rankToValueConversion.put('T', 9);
+    rankToValueConversion.put('J', 10);
+    rankToValueConversion.put('Q', 11);
+    rankToValueConversion.put('K', 12);
+    rankToValueConversion.put('A', 13);
+
+    private List<List<String>> remainingCards = new ArrayList<>();
+
+    private List<List<Set<String>> possibleOpponentHands = new ArrayList<>();
+
     private Map<String,Double> suitedPairWinProbMap;
-   
+
     private Map<String,Double> nonSuitedPairWinProbMap;
-    
-    
-   
-    
+
+
+
+
     //Maps strategies to their associated starting cards
-    //e.g AGGRESSIVE would be mapped to [Ac,As] 
+    //e.g AGGRESSIVE would be mapped to [Ac,As]
 
     /**
      * Called when a new game starts. Called exactly once.
@@ -415,7 +488,7 @@ public class Player implements Bot {
     public Player() {
         this.allocation = new String[3][2];
         this.winProb = new double[3];
-        
+
         //initial strategy for game 1,2 and 3
         this.suitedPairWinProbMap = new HashMap<>();
         for (int i = 0; i < suitedPairs.size(); i++) {
@@ -441,6 +514,21 @@ public class Player implements Bot {
         int roundNum = gameState.roundNum;  // the round number from 1 to State.NUM_ROUNDS
         List<String> myCards = roundState.hands.get(active);
         List<String> optimalAllocation = this.getOptimalAllocation(myCards);
+
+        //Creates the remaining cards field for each board, which start out as the same.
+        List<String> cardsRemainingAfterDeal = getRemainingCardsAtStart(myCards);
+
+        // This gets all permuations of possible opponent deals.
+        List<Set<String>> possibleOpponentHandsAfterDeal = getPossibleOpponentHandsAtStart(new ArrayList<>());
+
+        //Gives each part to each board.
+        for (int i = 0; i < 3; i++) {
+          this.remainingCards.add(new ArrayList<>(cardsRemainingAfterDeal));
+          this.possibleOpponentHands.add(new ArrayList<>(possibleOpponentHandsAfterDeal));
+        }
+
+
+
         System.out.println("\n" + "ROUND " + roundNum);
         if (roundNum == State.NUM_ROUNDS) {
             System.out.println(gameClock);
@@ -469,9 +557,256 @@ public class Player implements Bot {
         //    oppCards.add(previousBoardState.hands.get(1-active)); // opponent's cards or "" if not revealed
         //}
     }
-    
+
+    /*
+      Gives all remaining cards for each board that are not within our own or displayed on the board. Should
+      only be called at the beginning of a round though, such that this function only takes into account
+      cards that we do not own. The cards in the flop, turn, and river will be added to this parameter separately.
+
+      @param myCards the cards that we hold in our hands across all boards.
+    */
+    private List<String> getRemainingCardsAtStart(List<String> myCards) {
+      List<String> cardsRemainingWithoutMine = new ArrayList<>();
+      cardsRemainingWithoutMine.addAll(allCards);
+      cardsRemainingWithoutMine.removeAll(myCards);
+      return cardsRemainingWithoutMine;
+    }
+
+    /*
+      Gives all permuatations of possible hands that the opponent has, excluding the six cards that we originally hold.
+      Should be 1035 total combinations per board at the start.
+
+      @param myCards the cards that we hold in our hands across all boards.
+    */
+    private List<Set<String>> getPossibleOpponentHandsAtStart() {
+
+      //Use remaining cards to generate all permuations of remaining hands. Should not contain nor iterate over duplcates.
+      List<Set<String>> currentHands = new ArrayList<>();
+      for ( int i = 0; i < this.remainingCards.get(0).size(); i++) {
+        for ( int j = i + 1; j < this.remainingCards.get(0).size(); j++) {
+
+          currentHands.add(Set.of(this.remainingCards.get(0).get(i), this.remainingCards.get(0).get(j)));
+
+        }
+      }
+
+      return currentHands;
+    }
+
+    /*
+      Takes in a card, and for each board removes all possible opponent's hands that contain that card.
+
+      @param currentPossibilites a List of 3 lists of possible opponent hands
+      @param card the list of strings representing the card to remove from the opponent hands for that board
+    */
+    private void eliminateOpponentHandPossibilities(List<List<String>> card, int boardNum) {
+      List<Set<String>> opponentHandsOnBoard = this.possibleOpponentHands.get(boardNum);
+      for (int i = 0; i < opponentHandsOnBoard.size(); i++) {
+        Set<String> currentHand = opponentHandsOnBoard.get(i);
+        if (currentHand.contains(card)) {
+          opponentHandsOnBoard.remove(i);
+        }
+      }
+    }
+
+
+    /*
+      Checks to determine a  hand's best hand for a given board, via a dictionary that maps the hand type to an integer value.
+      Integer Val:          Hand:
+          1             Royal Flush
+          2             Straight Flush
+          3             Four of a Kind
+          4             Full House
+          5             Flush
+          6             Straight
+          7             Three of a Kind
+          8             Two Pair
+          9             One Pair
+          10            High Card
+    */
+
+    private List<Integer> determineBestHandOnEachBoard(List<String> myCards, List<List<String>> boardCards) {
+
+      List<Integer> result = new ArrayList<>();
+
+      List<List<String>> allCardsForEachBoard = new ArrayList<>();
+      for (int i = 0; i < 3: i++) {allCardsForEachBoard.add(new ArrayList<>();}
+
+      for (int i = 0; i < 3; i++) {
+        for (String card : boardCards) {
+          allCardsForEachBoard.get(i).add(card);
+        }
+        for (String card : myCards) {
+          allCardsForEachBoard.get(i).add(card);
+        }
+      }
+
+      for (int i = 0; i < 3; i++) {
+
+        result.add(determineBestHandOfGivenCards(allCardsForEachBoard.get(i)));
+
+      }
+
+      return result;
+    }
+
+
+
+    /*
+     * Create SuitToRank and RankToSuit dictionaries.
+     *
+     * @param cards all cards in your hand and on the board
+     * @param fromSuitToRank a dictionary mapping suits visible to their respective ranks,
+     *                       initially is empty
+     * @param fromRankToSuit a dictionary mapping ranks to their respective available suits,
+     *                       initially is empty
+     */
+
+    private void createSuitAndRankDictionaries(List<String> cards, List<Map<Character, List<Character>>> fromSuitToRank, List<Map<Character, List<Character>>> fromRankToSuit) {
+
+        for (String card : cards) {
+          char rank = card.charAt(0);
+          char suit = card.charAt(1);
+          fromSuitToRank.putIfAbsent(suit, new ArrayList<>());
+          fromSuitToRank.get(suit).add(rank);
+          fromRankToSuit.putIfAbsent(rank, new ArrayList<>());
+          fromRankToSuit.get(rank).add(suit);
+        }
+    }
+
+
+
+    /*
+     * Determines if a flush exists from a given pair of cards.
+     *
+     * @param cards a list of cards on the board and in your hand
+     * @param fromSuitToRank map from suits to their resoective suits available.
+     */
+    private Character determineIfFlushExists(List<String> cards, List<Map<Character, List<Character>>> fromSuitToRank) {
+        Character flushExists = null;
+        for (Character suit : fromSuitToRank.keySet()) {
+            if (fromSuitToRank.get(suit).size() >= 5) {
+              flushExists = suit;
+            }
+        }
+        return flushExists;
+    }
+
     /**
-     * Given 5,6 or 7 cards, calculate the conditional probability of 
+     * determines all Pairs from a given set of cards
+     * @param allRanks an empty array, which will be mutated with all ranks available
+     * @param fromRankToSuit a dictionary mapping ranks to all suits available for that rank
+     * @return  the set of all pairs for a given set of cards
+     */
+    private Set<Character> determineIfTwoPairExists(Set<Character> allRanks, List<Map<Character, List<Character>>> fromRankToSuit) {
+
+        Set<Character> allPairs = new HashSet<>();
+        for (Character rank : fromRankToSuit.keySet()) {
+            if (fromRankToSuit.get(rank).size() >= 2) {
+              allPairs.add(rank);
+            }
+            allRanks.add(rankToValueConversion.get(rank));
+        }
+
+        return allPairs;
+
+    }
+
+    /**
+     * Determines if a straight exists via a set of ranks.
+     * @param allRanks a list of available ranks
+     * @return true if a straight exists, otherwise false
+     */
+    private boolean determineIfStraightExists(List<Character> allRanks) {
+
+        boolean straightExists = false;
+        Collections.sort(allRanks);
+
+        int counter = 0;
+        int end = 4;
+        //IMPORTANT: CURRENTLY ONLY COUNTS THE STRAIGHTS THAT EXCLUDE AN ACE ACTING AS A ONE.
+        while (end < allRanks.size()) {
+          if (allRanks.get(end) - allRanks.get(counter) == 4) straightExists = true;
+        }
+
+        return straightExists;
+    }
+
+
+
+
+    /*
+      Given a list of cards,
+    */
+    private int determineBestHandOfGivenCards(List<String> cards) {
+
+        /*
+        Relationships between pokerhands to leverage:
+          1.) Royal Flush, Straight Flush are all Flushes (1,2,5)
+          2.) Two of a Kind gives rise to potentially 3 of a kind, four of a kind (9 -> 7-> 3)
+          3.) Two pair gives rise to a full house potentially (8 -> 4)
+          4.) High Card is alone (10)
+          5.) Straight is alone (6)
+      */
+
+      List<Map<Character, List<Character>>> fromSuitToRank = new HashMap<>();
+      List<Map<Character, List<Character>>> fromRankToSuit = new HashMap<>();
+
+      createSuitAndRankDictionaries(cards, fromSuitToRank, fromRankToSuit);
+
+
+      //Determine if bases for each category are met.
+      Character flushExists = determineIfFlushExists(cards, fromSuitToRank);
+
+      List<Character> allRanks = new ArrayList<>();
+      Set<Character> allPairs = determineIfTwoPairExists(allRanks, fromRankToSuit);
+
+      boolean pairExists = (twoPairExists.size() != 0) ? true : false;
+      //Will contain rank of any pairs possible, so could be up to a length of 4.
+
+      boolean straightExists = determineIfStraightExists(allRanks);
+
+
+      int bestHand = 10;
+      if (flushExists != null) {
+        bestHand = 5;
+        if (straightExists != null) {
+          bestHand = 2;
+          if (allRanks.containsAll(List.of(9,10,11,12,13))) bestHand = 1;
+        }
+      }
+
+      if (allPairs.size() > 1) {
+        bestHand = Math.min(8, bestHand);
+        for (Character pair : allPairs) {
+          if (fromRankToSuit.get(pair).size() > 2) bestHand = Math.min(4, bestHand);
+        }
+      }
+
+      if (pairExists) {
+        bestHand = Math.min(9, bestHand);
+        for (Character pair : allPairs) {
+          if (fromRankToSuit.get(pair).size() > 2) {
+            if (fromRankToSuit.get(pair).size() > 3) {
+              bestHand = Math.min(3, bestHand);
+            } else {
+              bestHand = Math.min(7, bestHand);
+            }
+          }
+        }
+      }
+
+      if (straightExists) bestHand = Math.min(6, bestHand);
+
+      return bestHand;
+    }
+
+    // private int determineWinnerOfEqualHands(List<String> handOne, List<String> handTwo, List<List<String>> boardCards, int boardNum) {
+    //
+    // }
+
+    /**
+     * Given 5,6 or 7 cards, calculate the conditional probability of
      * 1. Getting a flush and 2. winning with that flush.
      * @param cards
      * @return probability of winning with a flush
@@ -479,7 +814,12 @@ public class Player implements Bot {
     private double getFlushWinProb(List<String> cards) {
         if (maxSameSuit(cards) >= 5) {
             //WE HAVE A FLUSH
-            return MADE_FLUSH_WIN_PROBABILITY; 
+<<<<<<< Updated upstream
+            return MADE_FLUSH_WIN_PROBABILITY;
+=======
+            System.out.println("FLUSH! " + MADE_FLUSH_WIN_PROBABILITY + " WIN PROBABILITY");
+            return MADE_FLUSH_WIN_PROBABILITY;
+>>>>>>> Stashed changes
         }
         else if (maxSameSuit(cards) == 4) {
             if (cards.size() == 5) {
@@ -496,7 +836,7 @@ public class Player implements Bot {
             //NEGLIGIBLE
             return 0;
         }
-        
+
     }
     /**
      * Returns the max number of cards in the list with the same
@@ -517,8 +857,8 @@ public class Player implements Bot {
         }
         return Collections.max(new ArrayList<>(frequencyMap.values()));
     }
-    
-    
+
+
     /**
      * Use a NN to approximate the probability of winning given
      * the current cards regardless of suit
@@ -535,15 +875,51 @@ public class Player implements Bot {
             return 0;//TODO
         }
     }
-    
+
     /**
      * Recalculate win probabilities for each board based on the cards that are
      * showing and the cards we hold.
      * @param myCards cards held where adjacent indices are on one board (0,1),(2,3) etc.
      * @param boardCards cards showing up on the board.
      */
-    private void recalculateWinProb(List<String> myCards, List<List<String>> boardCards) {
-        
+    private void recalculateWinProb(List<String> myCards, List<List<String>> boardCards, RoundState roundState) {
+
+      /*
+        A basic idea for this is to calculate the number of current hands that could beat yours at the moment, and divide that by the total # of permuations.
+
+
+        Following this, we must predict the future with calculating the probability of our outs to make each possible hand, and multiply the results of that
+        by the probability of it happening.
+      */
+
+      /*
+        Step 1: Calculate the current probability of winning, without the probabilities of future cards.
+            1.) Determine our best hand.
+            2.) Determine all permutations of other hands that the opponent could have (52 cards - 3 cards in flop - 6 cards you own)
+            3.) Run through them, and determine how many of them would beat your hand vs how many would not, giving the win
+      */
+
+      int street = roundState.street;
+      List<Integer> possibleStreets = List.of(0,3,4,5);
+
+      List<Integer> bestHandForMe = this.determineBestHand(myCards, boardCards);
+
+      int previousStreet = (street != 0) ? possibleStreets.get(possibleStreets.indexOf(street) - 1) : 0;
+      for (int j = 0; j < 3; j++) {
+        for (int i = previousStreet; i < street; i++) {
+          String currentCard = boardCards.get(j).get(i);
+          this.remainingCards.get(j).removeAll(currentCard);
+          eliminateOpponentHandPossibilities(currentCard, j);
+        }
+      }
+
+      //TODO implement the probability of winning based on other hands.
+
+
+
+
+
+
         for (int i = 0; i < 3; i++) {
             double winProbability = winProb[i];
             String card1 = myCards.get(2*i);
@@ -561,16 +937,16 @@ public class Player implements Bot {
             double fullHouseWinProb;
             double fourOfAKindWinProb;
             double flushWinProb;
-            
+            System.out.println("FLUSH CHECK FOR BOARD: " + (i+1));
             flushWinProb = this.getFlushWinProb(commCards);
             winProb[i] = Collections.max(List.of(winProbability, flushWinProb));
 //            winProb[i] = Math.max(nonFlushWinProb, flushWinProb);//maximum of chance of winning with a flush and chance of winning
             //without a flush
         }
-        
-        
+
+
     }
-    
+
     /**
      * Given the round state, return a list of list of cards where index 0
      * is the first board's up-facing cards and so on.
@@ -591,10 +967,10 @@ public class Player implements Bot {
                 }
             }
             boardCards.add(upFacingCards);
-            
+
         }
         return boardCards;
-        
+
     }
 
     /**
@@ -611,36 +987,36 @@ public class Player implements Bot {
         int street = roundState.street;  // 0, 3, 4, or 5 representing pre-flop, flop, turn, or river respectively
         List<String> myCards = roundState.hands.get(active); // your cards across all boards
          // the board cards
-        
+
         // int[] myPips = new int[State.NUM_BOARDS];  // the number of chips you have contributed to the pot on each board this round of betting
         // int[] oppPips = new int[State.NUM_BOARDS];  // the number of chips your opponent has contributed to the pot on each board this round of betting
 //         int[] continueCost = new int[State.NUM_BOARDS];  // the number of chips needed to stay in each pot
-         
-        
+
+
         int myStack = roundState.stacks.get(active);  // the number of chips you have remaining
         int oppStack = roundState.stacks.get(1-active);
         // int oppStack = roundState.stacks.get(1-active);  // the number of chips your opponent has remaining
         int netLowerRaiseBound = roundState.raiseBounds().get(0);
         int netUpperRaiseBound = roundState.raiseBounds().get(1);  // the maximum value you can raise across all 3 boards
-        int netCost = 0;  // to keep track of the net additional amount you are spending across boards this round 
-        
+        int netCost = 0;  // to keep track of the net additional amount you are spending across boards this round
+
         List<Action> myActions = new ArrayList<Action>();
-      
+
         //GET A LIST OF UP FACING CARDS ON EACH BOARD
         List<List<String>> boardCards = this.getBoardCards(roundState);
-        
-        
+
+
         //RECALCULATE WIN PROBABILITIES FOR EACH BOARD AND STORE IN this.winProb
         if (street > 0 ) {
-            this.recalculateWinProb(myCards, boardCards);
+            this.recalculateWinProb(myCards, boardCards, roundState);
         }
-        
-        
+
+
         for (int i = 0; i < State.NUM_BOARDS; i++) {
-            
-            
+
+
             Set<ActionType> legalBoardActions = legalActions.get(i);
-            if (legalBoardActions.contains(ActionType.ASSIGN_ACTION_TYPE)) { 
+            if (legalBoardActions.contains(ActionType.ASSIGN_ACTION_TYPE)) {
                 String card1;
                 String card2;
                 if (i == 0) {
@@ -655,17 +1031,17 @@ public class Player implements Bot {
                     card1 = allocation[2][0];
                     card2 = allocation[2][1];
                 }
-                
+
                 myActions.add(new Action(ActionType.ASSIGN_ACTION_TYPE, List.of(card1, card2)));
-                
+
             }
             else if (roundState.boardStates.get(i) instanceof TerminalState) {
                 myActions.add(new Action(ActionType.CHECK_ACTION_TYPE));
             }
-            
+
             else {
                 //DECIDE WHAT TO DO BASED ON WIN PROBABILITY
-                
+
                 BoardState state = (BoardState) roundState.boardStates.get(i);
                 final int myPips = state.pips.get(active);
                 final int oppPips = state.pips.get(1-active);
@@ -675,42 +1051,42 @@ public class Player implements Bot {
                 final double winProbability = winProb[i];
                 double potOdds = ((double) continueCost)/(continueCost + pot);
                 final int maxContribution = myPips + Collections.min(List.of(pipsAvailable, oppStack + continueCost));
-                final int minContribution = myPips + Collections.min(List.of(maxContribution, continueCost + 
+                final int minContribution = myPips + Collections.min(List.of(maxContribution, continueCost +
                         Collections.max(List.of(continueCost, BIG_BLIND))));
-                
-                
+
+
                 System.out.println("\n");
                 System.out.println("CHIPS IN POT: " + pot);
                 //ONLY RAISE WHEN no continue cost (able to check)
-                
-                if(winProbability > CONFIDENT_WIN_THRESHOLD && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE) 
+
+                if(winProbability > CONFIDENT_WIN_THRESHOLD && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE)
                         && legalBoardActions.contains(ActionType.CHECK_ACTION_TYPE)) {
-                    
+
                     final int desiredRaise =  (int) (CONFIDENT_WIN_BET_SIZE*pot);
                     final int raiseAmount = Collections.min(
                             List.of(maxContribution, Collections.max(List.of(minContribution, desiredRaise))));
-                    
+
                     myActions.add(new Action(ActionType.RAISE_ACTION_TYPE, raiseAmount));
                     netCost += raiseAmount;
                 }
-                else if (winProbability > THRESHOLD_2 && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE) 
+                else if (winProbability > THRESHOLD_2 && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE)
                         && legalBoardActions.contains(ActionType.CHECK_ACTION_TYPE)){
-                    
+
                     final int desiredRaise = (int) (THRESHOLD_2_BET_SIZE*pot);
                     final int raiseAmount = Collections.min(
                             List.of(maxContribution, Collections.max(List.of(minContribution, desiredRaise))));
-                    
+
                     myActions.add(new Action(ActionType.RAISE_ACTION_TYPE, raiseAmount));
                     netCost += raiseAmount;
-                    
+
                 }
-                else if (winProbability > THRESHOLD_3 && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE) 
+                else if (winProbability > THRESHOLD_3 && legalBoardActions.contains(ActionType.RAISE_ACTION_TYPE)
                         && legalBoardActions.contains(ActionType.CHECK_ACTION_TYPE)) {
-                    
+
                     final int desiredRaise = (int) (THRESHOLD_3_BET_SIZE*pot);
                     final int raiseAmount = Collections.min(
                             List.of(maxContribution, Collections.max(List.of(minContribution, desiredRaise))));
-                    
+
                     myActions.add(new Action(ActionType.RAISE_ACTION_TYPE, raiseAmount));
                     netCost += raiseAmount;
                 }
@@ -723,18 +1099,18 @@ public class Player implements Bot {
                         myActions.add(new Action(ActionType.CALL_ACTION_TYPE));
                         netCost += continueCost;
                     }
-                        
+
                 }
                 //Odds are worse than what it takes to stay in
                 else {
                     myActions.add(new Action(ActionType.FOLD_ACTION_TYPE));
                 }
-                
-            } 
+
+            }
         }
         return myActions;
     }
-    
+
     /**
      * Given a list of cards, determine the optimal allocation and return it as an ordered list
      * where the first two cards represent the first game, second pair represents second game
@@ -747,13 +1123,13 @@ public class Player implements Bot {
         List<List<String>> allocations = getAllAllocations(cards);
         double maxProb = 0;
         List<String> optimalAllocation = allocations.get(0);
-        
+
         for (List<String> a : allocations) {
             double winProb1 = getWinProbability(a.get(0), a.get(1));
             double winProb2 = getWinProbability(a.get(2), a.get(3));
             double winProb3 = getWinProbability(a.get(4), a.get(5));
             double probSum = winProb1 + winProb2 + winProb3;
-                    
+
             if ((probSum >= maxProb) && (winProb1<= winProb2) && (winProb2 <= winProb3)){
                 optimalAllocation = a;
                 maxProb = probSum;
@@ -770,7 +1146,7 @@ public class Player implements Bot {
         allocation[2][1] = optimalAllocation.get(5);
         return optimalAllocation;
     }
-    
+
     /**
      * Gets all possible allocations of the cards
      * @param cards the 6 cards to shuffle
@@ -783,7 +1159,7 @@ public class Player implements Bot {
             allocations.add(c);
             return allocations;
         }
-        
+
         for (int i = 0; i < c.size(); i++) {
             String card = c.remove(i);
             List<List<String>> allocAfterRemoved = getAllAllocations(c);
@@ -795,7 +1171,7 @@ public class Player implements Bot {
         }
         return allocations;
     }
-    
+
     /**
      * Given two cards, get the win probability according to pre-calculated values.
      * @param card1 valid representation of a card e.g "As", "5c"
@@ -826,11 +1202,11 @@ public class Player implements Bot {
             else {
                 return nonSuitedPairWinProbMap.get(try2);
             }
-            
+
         }
     }
-    
-    
+
+
 
     /**
      * Main program for running a Java pokerbot.
