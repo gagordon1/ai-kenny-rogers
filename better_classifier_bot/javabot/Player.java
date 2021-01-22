@@ -397,7 +397,19 @@ public class Player implements Bot {
             0.2908,
             0.5315
             );
-
+    
+    
+//    1             Royal Flush
+//    2             Straight Flush
+//    3             Four of a Kind
+//    4             Full House
+//    5             Flush
+//    6             Straight
+//    7             Three of a Kind
+//    8             Two Pair
+//    9             One Pair
+//    10            High Card
+    private List<Double> handWinProbabilities = List.of(0,1,.9,.9,.9,.9,.85,.7,.6,.55,.45);
     private List<String> allCards = List.of(
       "As",
       "Ks",
@@ -450,27 +462,15 @@ public class Player implements Bot {
       "5d",
       "4d",
       "3d",
-      "2d",
+      "2d"
     );
 
     private Map<Character, Integer> rankToValueConversion = new HashMap<>();
-    rankToValueConversion.put('2', 1);
-    rankToValueConversion.put('3', 2);
-    rankToValueConversion.put('4', 3);
-    rankToValueConversion.put('5', 4);
-    rankToValueConversion.put('6', 5);
-    rankToValueConversion.put('7', 6);
-    rankToValueConversion.put('8', 7);
-    rankToValueConversion.put('9', 8);
-    rankToValueConversion.put('T', 9);
-    rankToValueConversion.put('J', 10);
-    rankToValueConversion.put('Q', 11);
-    rankToValueConversion.put('K', 12);
-    rankToValueConversion.put('A', 13);
+    
 
     private List<List<String>> remainingCards = new ArrayList<>();
 
-    private List<List<Set<String>> possibleOpponentHands = new ArrayList<>();
+    private List<List<Set<String>>> possibleOpponentHands = new ArrayList<>();
 
     private Map<String,Double> suitedPairWinProbMap;
 
@@ -486,6 +486,22 @@ public class Player implements Bot {
      * Called when a new game starts. Called exactly once.
      */
     public Player() {
+        
+        rankToValueConversion.put('2', 1);
+        rankToValueConversion.put('3', 2);
+        rankToValueConversion.put('4', 3);
+        rankToValueConversion.put('5', 4);
+        rankToValueConversion.put('6', 5);
+        rankToValueConversion.put('7', 6);
+        rankToValueConversion.put('8', 7);
+        rankToValueConversion.put('9', 8);
+        rankToValueConversion.put('T', 9);
+        rankToValueConversion.put('J', 10);
+        rankToValueConversion.put('Q', 11);
+        rankToValueConversion.put('K', 12);
+        rankToValueConversion.put('A', 13);
+        
+        
         this.allocation = new String[3][2];
         this.winProb = new double[3];
 
@@ -630,7 +646,7 @@ public class Player implements Bot {
       List<Integer> result = new ArrayList<>();
 
       List<List<String>> allCardsForEachBoard = new ArrayList<>();
-      for (int i = 0; i < 3: i++) {allCardsForEachBoard.add(new ArrayList<>();}
+      for (int i = 0; i < 3; i++) {allCardsForEachBoard.add(new ArrayList<>());}
 
       for (int i = 0; i < 3; i++) {
         for (String card : boardCards) {
@@ -814,12 +830,7 @@ public class Player implements Bot {
     private double getFlushWinProb(List<String> cards) {
         if (maxSameSuit(cards) >= 5) {
             //WE HAVE A FLUSH
-<<<<<<< Updated upstream
             return MADE_FLUSH_WIN_PROBABILITY;
-=======
-            System.out.println("FLUSH! " + MADE_FLUSH_WIN_PROBABILITY + " WIN PROBABILITY");
-            return MADE_FLUSH_WIN_PROBABILITY;
->>>>>>> Stashed changes
         }
         else if (maxSameSuit(cards) == 4) {
             if (cards.size() == 5) {
@@ -856,24 +867,6 @@ public class Player implements Bot {
             }
         }
         return Collections.max(new ArrayList<>(frequencyMap.values()));
-    }
-
-
-    /**
-     * Use a NN to approximate the probability of winning given
-     * the current cards regardless of suit
-     * @param cards
-     */
-    private double getNonFlushWinProb(List<String> cards) {
-        if(cards.size() == 5) {
-            return 0;//TODO
-        }
-        else if(cards.size() == 6) {
-            return 0;//TODO
-        }
-        else {
-            return 0;//TODO
-        }
     }
 
     /**
@@ -933,13 +926,12 @@ public class Player implements Bot {
             //GET PROBABILITY OF WINNING WITH A FLUSH
             commCards.add(card1);
             commCards.add(card2);
-            double straightWinProb;
-            double fullHouseWinProb;
-            double fourOfAKindWinProb;
-            double flushWinProb;
-            System.out.println("FLUSH CHECK FOR BOARD: " + (i+1));
-            flushWinProb = this.getFlushWinProb(commCards);
-            winProb[i] = Collections.max(List.of(winProbability, flushWinProb));
+            double flushWinProb = this.getFlushWinProb(commCards);
+            int bestHand = determineBestHandOnEachBoard(myCards, boardCards).get(i);
+            
+            double goodHandWinProb = handWinProbabilities.get(bestHand);
+            
+            winProb[i] = Collections.max(List.of(flushWinProb, goodHandWinProb));
 //            winProb[i] = Math.max(nonFlushWinProb, flushWinProb);//maximum of chance of winning with a flush and chance of winning
             //without a flush
         }
