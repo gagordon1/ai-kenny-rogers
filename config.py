@@ -4,7 +4,7 @@ PLAYER_1_NAME = 'hero'
 PLAYER_1_PATH = './opponent_hand_prediction_bot'
 # NO TRAILING SLASHES ARE ALLOWED IN PATHS
 PLAYER_2_NAME = 'VILLAIN'
-PLAYER_2_PATH = './optimal_allocation_bot'
+PLAYER_2_PATH = './old_opponent_hand_prediction_bot'
 # GAME PROGRESS IS RECORDED HERE
 GAME_LOG_FILENAME = 'gamelog'
 # PLAYER_LOG_SIZE_LIMIT IS IN BYTES

@@ -38,10 +38,10 @@ public class Player implements Bot {
     private static double CONFIDENT_WIN_THRESHOLD = .9;
     private static double CONFIDENT_WIN_BET_SIZE = .75;
 
-    private static double THRESHOLD_2 = .75;
+    private static double THRESHOLD_2 = .6;
     private static double THRESHOLD_2_BET_SIZE = .5;
 
-    private static double THRESHOLD_3 = .6;
+    private static double THRESHOLD_3 = .5;
     private static double THRESHOLD_3_BET_SIZE = .25;
 
     private static int BIG_BLIND = 2;
