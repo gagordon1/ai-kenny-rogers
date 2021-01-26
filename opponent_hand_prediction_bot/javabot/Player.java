@@ -13,6 +13,8 @@ import javabot.skeleton.Runner;
 import java.util.*;
 import java.lang.Integer;
 import java.lang.String;
+import java.util.stream.*;
+
 
 
 
@@ -461,6 +463,7 @@ public class Player implements Bot {
 
     private Map<Character, Integer> rankToValueConversion = new HashMap<>();
 
+    private Map<Integer, Character> valueToRankConversion = new HashMap<>();
 
     private List<List<String>> remainingCards = new ArrayList<>();
 
@@ -479,6 +482,27 @@ public class Player implements Bot {
     /**
      * Called when a new game starts. Called exactly once.
      */
+
+
+    public class Hand {
+
+      List<String> contents;
+      int strength;
+
+      public Hand (List<String> contents, int strength) {
+        this.contents = contents;
+        this.strength = strength;
+      }
+
+      public Hand() {
+        this.contents = new ArrayList<>();
+        this.strength = 11;
+      }
+    }
+
+
+
+
     public Player() {
 
         rankToValueConversion.put('2', 1);
@@ -494,6 +518,20 @@ public class Player implements Bot {
         rankToValueConversion.put('Q', 11);
         rankToValueConversion.put('K', 12);
         rankToValueConversion.put('A', 13);
+
+        valueToRankConversion.put(1, '2');
+        valueToRankConversion.put(2, '3');
+        valueToRankConversion.put(3, '4');
+        valueToRankConversion.put(4, '5');
+        valueToRankConversion.put(5, '6');
+        valueToRankConversion.put(6, '7');
+        valueToRankConversion.put(7, '8');
+        valueToRankConversion.put(8, '9');
+        valueToRankConversion.put(9, 'T');
+        valueToRankConversion.put(10, 'J');
+        valueToRankConversion.put(11, 'Q');
+        valueToRankConversion.put(12, 'K');
+        valueToRankConversion.put(13, 'A');
 
 
         this.allocation = new String[3][2];
@@ -527,16 +565,17 @@ public class Player implements Bot {
         List<String> optimalAllocation = this.getOptimalAllocation(myCards);
 
         //Creates the remaining cards field for each board, which start out as the same.
-        List<String> cardsRemainingAfterDeal = getRemainingCardsAtStart(myCards);
-
+        this.remainingCards = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            this.remainingCards.add(new ArrayList<>(cardsRemainingAfterDeal));
+            this.remainingCards.add(getRemainingCardsAtStart(myCards));
         }
+
 
         // This gets all permuations of possible opponent deals.
         List<Set<String>> possibleOpponentHandsAfterDeal = getPossibleOpponentHandsAtStart();
 
         //Gives each part to each board.
+        this.possibleOpponentHands = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
           this.possibleOpponentHands.add(new ArrayList<>(possibleOpponentHandsAfterDeal));
         }
@@ -570,6 +609,7 @@ public class Player implements Bot {
         //    myCards.add(previousBoardState.hands.get(active)); // your cards
         //    oppCards.add(previousBoardState.hands.get(1-active)); // opponent's cards or "" if not revealed
         //}
+
     }
 
     /*
@@ -603,7 +643,6 @@ public class Player implements Bot {
 
         }
       }
-
       return currentHands;
     }
 
@@ -639,9 +678,9 @@ public class Player implements Bot {
           10            High Card
     */
 
-    private List<Integer> determineBestHandOnEachBoard(List<String> myCards, List<List<String>> boardCards, GameState gameState) {
+    private List<Hand> determineBestHandOnEachBoard(List<String> myCards, List<List<String>> boardCards) {
 
-      List<Integer> result = new ArrayList<>();
+      List<Hand> result = new ArrayList<>();
 
       List<List<String>> allCardsForEachBoard = new ArrayList<>();
       for (int i = 0; i < 3; i++) {allCardsForEachBoard.add(new ArrayList<>());}
@@ -650,15 +689,12 @@ public class Player implements Bot {
         for (String card : boardCards.get(i)) {
           allCardsForEachBoard.get(i).add(card);
         }
-        for (String card : myCards) {
-          allCardsForEachBoard.get(i).add(card);
-        }
+        allCardsForEachBoard.get(i).add(myCards.get(i*2));
+        allCardsForEachBoard.get(i).add(myCards.get((i*2)+1));
       }
 
       for (int i = 0; i < 3; i++) {
         result.add(determineBestHandOfGivenCards(allCardsForEachBoard.get(i)));
-
-
       }
 
       return result;
@@ -689,6 +725,23 @@ public class Player implements Bot {
     }
 
 
+    private Hand getBestFlushHand(List<Character> cardsOfSameSuit, Character suit) {
+      // System.out.println("getting best flush...");
+      List<Integer> ranks = new ArrayList<>();
+      for (Character c : cardsOfSameSuit) {
+        ranks.add(rankToValueConversion.get(c));
+      }
+
+
+      Collections.sort(ranks);
+      List<String> content = new ArrayList<>();
+      for (Integer r : ranks) {
+        content.add(Character.toString(valueToRankConversion.get(r)) + Character.toString(suit));
+      }
+      Hand toReturn = new Hand(content.subList(content.size() - 5, content.size()), 5);
+      // System.out.println(toReturn.contents.toString());
+      return toReturn;
+    }
 
     /*
      * Determines if a flush exists from a given pair of cards.
@@ -696,13 +749,15 @@ public class Player implements Bot {
      * @param cards a list of cards on the board and in your hand
      * @param fromSuitToRank map from suits to their resoective suits available.
      */
-    private Character determineIfFlushExists(List<String> cards, Map<Character, List<Character>> fromSuitToRank) {
-        Character flushExists = null;
+    private Hand determineIfFlushExists(List<String> cards, Map<Character, List<Character>> fromSuitToRank) {
+        // System.out.println("determiningIfFlushExists...");
+        Hand flushExists = new Hand();
         for (Character suit : fromSuitToRank.keySet()) {
             if (fromSuitToRank.get(suit).size() >= 5) {
-              flushExists = suit;
+              flushExists = getBestFlushHand(fromSuitToRank.get(suit), suit);
             }
         }
+        // System.out.println(flushExists.contents.toString());
         return flushExists;
     }
 
@@ -712,18 +767,15 @@ public class Player implements Bot {
      * @param fromRankToSuit a dictionary mapping ranks to all suits available for that rank
      * @return  the set of all pairs for a given set of cards
      */
-    private Set<Character> determineIfTwoPairExists(List<Integer> allRanks, Map<Character, List<Character>> fromRankToSuit) {
+    private Map<Integer, List<Character>> findCardFrequencies(List<Integer> allRanks, Map<Character, List<Character>> fromRankToSuit) {
 
-        Set<Character> allPairs = new HashSet<>();
+        Map<Integer, List<Character>> freqDict = new HashMap<>();
         for (Character rank : fromRankToSuit.keySet()) {
-            if (fromRankToSuit.get(rank).size() >= 2) {
-              allPairs.add(rank);
-            }
-            allRanks.add(rankToValueConversion.get(rank));
+            freqDict.putIfAbsent(fromRankToSuit.get(rank).size(), new ArrayList<>());
+            freqDict.get(fromRankToSuit.get(rank).size()).add(rank);
+            if (!allRanks.contains(rankToValueConversion.get(rank))) {allRanks.add(rankToValueConversion.get(rank));}
         }
-
-        return allPairs;
-
+        return freqDict;
     }
 
     /**
@@ -731,8 +783,8 @@ public class Player implements Bot {
      * @param allRanks a list of available ranks
      * @return true if a straight exists, otherwise false
      */
-    private boolean determineIfStraightExists(List<Integer> allRanks) {
-
+    private Hand determineIfStraightExists(List<Integer> allRanks, Map<Character, List<Character>> fromRankToSuit) {
+        // System.out.println("Determining if straight exists...");
         boolean straightExists = false;
         Collections.sort(allRanks);
 
@@ -740,21 +792,134 @@ public class Player implements Bot {
         int end = 4;
         //IMPORTANT: CURRENTLY ONLY COUNTS THE STRAIGHTS THAT EXCLUDE AN ACE ACTING AS A ONE.
         while (end < allRanks.size()) {
-          if (allRanks.get(end) - allRanks.get(counter) == 4) straightExists = true;
+          if (allRanks.get(end) - allRanks.get(counter) == 4) {
+            straightExists = true;
+            break;
+          }
           counter++;
           end++;
         }
 
-        return straightExists;
+        Hand result = new Hand();
+        List<String> content = new ArrayList<>();
+        if (straightExists) {
+          for (int i = counter; i <= end; i++) {
+            content.add(Character.toString(valueToRankConversion.get(allRanks.get(i))) + Character.toString(fromRankToSuit.get(valueToRankConversion.get(allRanks.get(i))).get(0)));
+          }
+          result.contents = content;
+          result.strength = 6;
+        }
+        // System.out.println(result.contents.toString());
+        return result;
     }
 
 
+    private boolean isRoyalFlush(Hand flush) {
+      Integer starting = 9;
+      for (String c : flush.contents) {
+        if (rankToValueConversion.get(c.charAt(0)) == starting) {
+          starting++;
+        } else {
+          return false;
+        }
+      }
+      return true;
+    }
 
+
+    private Hand getBestHandForPairs(Map<Integer, List<Character>> freq, Map<Character, List<Character>> fromRankToSuit, List<Integer> allRanks) {
+
+      //First we have to sort each one, then iterate downwards from 4 to see if frequency is available.
+      // System.out.println(1);
+
+      for (Integer i : freq.keySet()) {
+        freq.put(i, freq.get(i).stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+      }
+
+      List<String> resultingHand = new ArrayList<>();
+
+      //Four of a kind
+      if (freq.containsKey(4)) {
+
+        for (Character suit : fromRankToSuit.get(freq.get(4).get(0))) {
+          resultingHand.add(Character.toString(freq.get(4).get(0)) + Character.toString(suit));
+        }
+
+        for (int i = allRanks.size() - 1; i >= 0; i--) {
+          if (valueToRankConversion.get(allRanks.get(i)) != freq.get(4).get(0)) {
+            resultingHand.add(Character.toString(valueToRankConversion.get(allRanks.get(i))) + Character.toString(fromRankToSuit.get(valueToRankConversion.get(allRanks.get(i))).get(0)));
+            break;
+          }
+        }
+        // System.out.println(resultingHand.toString());
+        return new Hand(resultingHand, 3);
+
+        //Three of a Kind
+      } else if (freq.containsKey(3) && !freq.containsKey(2)) {
+        for (Character suit : fromRankToSuit.get(freq.get(3).get(0))) {
+          resultingHand.add(Character.toString(freq.get(3).get(0)) + Character.toString(suit));
+        }
+
+        for (int i = allRanks.size() - 1; i >= 0; i--) {
+          if (valueToRankConversion.get(allRanks.get(i)) != freq.get(3).get(0)) {
+            resultingHand.add(Character.toString(valueToRankConversion.get(allRanks.get(i))) + Character.toString(fromRankToSuit.get(valueToRankConversion.get(allRanks.get(i))).get(0)));
+            if (resultingHand.size() == 5) break;
+          }
+        }
+        // System.out.println(resultingHand.toString());
+        return new Hand(resultingHand, 7);
+
+      } else if (freq.containsKey(3) && freq.containsKey(2)) {
+        for (Character suit : fromRankToSuit.get(freq.get(3).get(0))) {
+          resultingHand.add(Character.toString(freq.get(3).get(0)) + Character.toString(suit));
+        }
+
+        for (Character suit : fromRankToSuit.get(freq.get(2).get(0))) {
+          resultingHand.add(Character.toString(freq.get(2).get(0)) + Character.toString(suit));
+        }
+        // System.out.println(resultingHand.toString());
+        return new Hand(resultingHand, 4);
+
+      //Pair, two pair
+    } else if (freq.containsKey(2)) {
+        int currentHandStrength = 9;
+        Set<Character> seenPairs = new HashSet<>();
+
+        for (Character rank : freq.get(2)) {
+          for (Character suit : fromRankToSuit.get(rank)) {
+            resultingHand.add(Character.toString(rank) + Character.toString(suit));
+            seenPairs.add(rank);
+          }
+          if (resultingHand.size() == 4) {
+            currentHandStrength = 8;
+            break;
+          }
+        }
+
+        for (int i = allRanks.size() - 1; i >= 0; i--) {
+          if (!seenPairs.contains(valueToRankConversion.get(allRanks.get(i)))) {
+            resultingHand.add(Character.toString(valueToRankConversion.get(allRanks.get(i))) + Character.toString(fromRankToSuit.get(valueToRankConversion.get(allRanks.get(i))).get(0)));
+            if (resultingHand.size() == 5) break;
+          }
+        }
+        // System.out.println(resultingHand.toString());
+        return new Hand(resultingHand, currentHandStrength);
+      } else {
+        for (int i = allRanks.size() - 1; i >= 0; i--) {
+          resultingHand.add(Character.toString(valueToRankConversion.get(allRanks.get(i))) + Character.toString(fromRankToSuit.get(valueToRankConversion.get(allRanks.get(i))).get(0)));
+          if (resultingHand.size() == 5) break;
+        }
+        // System.out.println(resultingHand.toString());
+        return new Hand(resultingHand, 10);
+      }
+    }
 
     /*
       Given a list of cards,
     */
-    private int determineBestHandOfGivenCards(List<String> cards) {
+    private Hand determineBestHandOfGivenCards(List<String> cards) {
+
+        if (cards.size() == 0) return new Hand();
 
         /*
         Relationships between pokerhands to leverage:
@@ -774,48 +939,37 @@ public class Player implements Bot {
 
 
       //Determine if bases for each category are met.
-      Character flushExists = determineIfFlushExists(cards, fromSuitToRank);
+      Hand flushExists = determineIfFlushExists(cards, fromSuitToRank);
 
       List<Integer> allRanks = new ArrayList<>();
-      Set<Character> allPairs = determineIfTwoPairExists(allRanks, fromRankToSuit);
+      Map<Integer, List<Character>> allFrequencies = findCardFrequencies(allRanks, fromRankToSuit);
 
-      boolean pairExists = (allPairs.size() != 0) ? true : false;
       //Will contain rank of any pairs possible, so could be up to a length of 4.
 
-      boolean straightExists = determineIfStraightExists(allRanks);
+      Hand straightExists = determineIfStraightExists(allRanks, fromRankToSuit);
 
 
-      int bestHand = 10;
-      if (flushExists != null) {
-        bestHand = 5;
-        if (straightExists == true) {
-          bestHand = 2;
-          if (allRanks.containsAll(List.of(9,10,11,12,13))) bestHand = 1;
+      Hand bestHand = new Hand();
+      if (flushExists.contents.size() != 0) {
+        bestHand = flushExists;
+        if (straightExists.contents.size() != 0) {
+          bestHand.strength = 2;
+          if (isRoyalFlush(flushExists)) bestHand.strength = 1;
         }
       }
 
-      if (allPairs.size() > 1) {
-        bestHand = Math.min(8, bestHand);
-        for (Character pair : allPairs) {
-          if (fromRankToSuit.get(pair).size() > 2) bestHand = Math.min(4, bestHand);
+      if (allFrequencies.keySet().size() > 1) {
+
+        Hand potentialBest = getBestHandForPairs(allFrequencies, fromRankToSuit, allRanks);
+        if (potentialBest.strength < bestHand.strength) {
+          bestHand = potentialBest;
         }
+
       }
 
-
-      if (pairExists) {
-        bestHand = Math.min(9, bestHand);
-        for (Character pair : allPairs) {
-          if (fromRankToSuit.get(pair).size() > 2) {
-            if (fromRankToSuit.get(pair).size() > 3) {
-              bestHand = Math.min(3, bestHand);
-            } else {
-              bestHand = Math.min(7, bestHand);
-            }
-          }
-        }
+      if (straightExists.strength < bestHand.strength) {
+        bestHand = straightExists;
       }
-
-      if (straightExists) bestHand = Math.min(6, bestHand);
 
 
       return bestHand;
@@ -873,13 +1027,28 @@ public class Player implements Bot {
         return Collections.max(new ArrayList<>(frequencyMap.values()));
     }
 
+    private boolean determineIfFirstHandBeatsSecondHand(Hand first, Hand second) {
+      int sumOfRanksForFirst = 0;
+      int sumOfRanksForSecond = 0;
+      for (String card : first.contents) {
+        sumOfRanksForFirst += rankToValueConversion.get(card.charAt(0));
+      }
+      for (String card : second.contents) {
+        sumOfRanksForSecond += rankToValueConversion.get(card.charAt(0));
+      }
+
+      if (sumOfRanksForFirst >= sumOfRanksForSecond) return true;
+      return false;
+
+    }
+
     /**
      * Recalculate win probabilities for each board based on the cards that are
      * showing and the cards we hold.
      * @param myCards cards held where adjacent indices are on one board (0,1),(2,3) etc.
      * @param boardCards cards showing up on the board.
      */
-    private void recalculateWinProb(List<String> myCards, List<List<String>> boardCards, RoundState roundState, GameState gameState) {
+    private List<Hand> recalculateWinProb(List<String> myCards, List<List<String>> boardCards, RoundState roundState, GameState gameState) {
 
       /*
         A basic idea for this is to calculate the number of current hands that could beat yours at the moment, and divide that by the total # of permuations.
@@ -901,7 +1070,7 @@ public class Player implements Bot {
       List<Integer> possibleStreets = List.of(0,3,4,5);
 
 
-      List<Integer> bestHandForMe = determineBestHandOnEachBoard(myCards, boardCards, gameState);
+      List<Hand> bestHandForMe = determineBestHandOnEachBoard(myCards, boardCards);
 
       int previousStreet = (street != 0) ? possibleStreets.get(possibleStreets.indexOf(street) - 1) : 0;
       for (int j = 0; j < 3; j++) {
@@ -914,35 +1083,36 @@ public class Player implements Bot {
         }
       }
 
-      //TODO implement the probability of winning based on other hands.
+
+      for (int i = 0; i < 3; i++) {
+        int handsWonOnThisBoard = 0;
+        if (boardCards.get(i).size() != 0) {
+          for (Set<String> hand : this.possibleOpponentHands.get(i)) {
+            List<String> allCardsHere = new ArrayList<>();
+            for (String card : boardCards.get(i)) {
+              allCardsHere.add(card);
+            }
+            for (String card : hand) {
+              allCardsHere.add(card);
+            }
+
+            Hand bestHandForThisDeal = determineBestHandOfGivenCards(allCardsHere);
+
+
+            if (bestHandForThisDeal.strength > bestHandForMe.get(i).strength || bestHandForThisDeal.strength == 11) {
+              handsWonOnThisBoard++;
+            } else if (bestHandForThisDeal.strength == bestHandForMe.get(i).strength && bestHandForMe.get(i).strength != 11) {
+              if (determineIfFirstHandBeatsSecondHand(bestHandForMe.get(i), bestHandForThisDeal)) handsWonOnThisBoard++;
+            }
+          }
+        }
+        double winProbability = (double) handsWonOnThisBoard / (double) this.possibleOpponentHands.get(i).size();
+        this.winProb[i] = winProbability;
+      }
 
 
 
-
-
-
-//         for (int i = 0; i < 3; i++) {
-//             double winProbability = winProb[i];
-//             String card1 = myCards.get(2*i);
-//             String card2 = myCards.get(2*i + 1);
-//             List<String> commCards = boardCards.get(i);
-// //            System.out.println("BOARD " + (i+1));
-// //            System.out.println("My Cards: " + card1 + " " + card2);
-// //            System.out.println("Board Cards: " + commCards);
-// //            System.out.println("\n\n");
-//             //GET PROBABILITY OF WINNING NOT CONSIDERING FLUSHES
-//             //GET PROBABILITY OF WINNING WITH A FLUSH
-//             commCards.add(card1);
-//             commCards.add(card2);
-//             double flushWinProb = this.getFlushWinProb(commCards);
-//             int bestHand = determineBestHandOnEachBoard(myCards, boardCards, gameState).get(i);
-//
-//             double goodHandWinProb = handWinProbabilities.get(bestHand);
-//
-//             winProb[i] = Collections.max(List.of(flushWinProb, goodHandWinProb));
-// //            winProb[i] = Math.max(nonFlushWinProb, flushWinProb);//maximum of chance of winning with a flush and chance of winning
-//             //without a flush
-//         }
+      return bestHandForMe;
 
 
     }
@@ -986,6 +1156,13 @@ public class Player implements Bot {
         List<Set<ActionType>> legalActions = roundState.legalActions();  // the actions you are allowed to take
         int street = roundState.street;  // 0, 3, 4, or 5 representing pre-flop, flop, turn, or river respectively
         List<String> myCards = roundState.hands.get(active); // your cards across all boards
+
+        List<String> properAllocation = new ArrayList<>();
+        for (String[] board : this.allocation) {
+          for (String card : board) {
+            properAllocation.add(card);
+          }
+        }
          // the board cards
 
         // int[] myPips = new int[State.NUM_BOARDS];  // the number of chips you have contributed to the pot on each board this round of betting
@@ -1008,7 +1185,7 @@ public class Player implements Bot {
 
         //RECALCULATE WIN PROBABILITIES FOR EACH BOARD AND STORE IN this.winProb
         if (street > 0 ) {
-            this.recalculateWinProb(myCards, boardCards, roundState, gameState);
+            List<Hand> winProbabilitiesPerBoard = this.recalculateWinProb(properAllocation, boardCards, roundState, gameState);
         }
 
 
@@ -1215,8 +1392,50 @@ public class Player implements Bot {
         Player player = new Player();
         Runner runner = new Runner();
 
+        List<String> myCards = List.of("2d", "3d", "2h", "3h", "5s", "6c", "7c");
+        Map<Character, List<Character>> fromSuitToRank = new HashMap<>();
+        Map<Character, List<Character>> fromRankToSuit = new HashMap<>();
+        player.createSuitAndRankDictionaries(myCards, fromSuitToRank, fromRankToSuit);
+
+        System.out.println("TESTING OF DICTIONARIES: ");
+        System.out.println(fromSuitToRank.toString());
+        System.out.println(fromRankToSuit.toString());
+        System.out.println("--------------------------");
+
+        System.out.println("TESTING CARD FREQUENCIES DICTIONARY:");
+        List<Integer> allRanks = new ArrayList<>();
+        Map<Integer, List<Character>> allFrequencies = player.findCardFrequencies(allRanks, fromRankToSuit);
+        System.out.println(allFrequencies.toString());
+        System.out.println(allRanks.toString());
+        System.out.println("------------------------------------");
+
+        player.determineIfStraightExists(allRanks, fromRankToSuit);
+
+        System.out.println("TESTING ISROYALFLUSH (WILL PRINT TRUE IF NOT A FLUSH):");
+        System.out.println(player.isRoyalFlush(player.determineIfFlushExists(myCards, fromSuitToRank)));
+        System.out.println("---------------------");
+
+        System.out.println("TESTING BESTHANDFORPAIRS:");
+        Hand best = player.getBestHandForPairs(allFrequencies, fromRankToSuit, allRanks);
+        System.out.println(best.contents.toString());
+        System.out.println(best.strength);
+        System.out.println("-------------------------");
+
+        System.out.println("TEST BEST HAND DETERMINATION:");
+        Hand bestHand = player.determineBestHandOfGivenCards(myCards);
+        System.out.println(bestHand.contents.toString());
+        System.out.println(bestHand.strength);
+        System.out.println("----------------------------");
+
+
+
+
+
+
+        //
         runner.parseArgs(args);
         runner.runBot(player);
+
 //        List<String> myCards = List.of("As", "Qc", "Th", "9d", "2s", "6h");
 //        List<List<String>> boardCards = List.of(
 //                List.of("Ah", "Qc", "3h"),
